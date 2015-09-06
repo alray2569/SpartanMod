@@ -666,7 +666,6 @@ a.download-button {
   background: -webkit-linear-gradient(top,  #37ADD4,  #1B657E);  /* Safari <=6.1, Android <= 4.3 */
   background: linear-gradient(to bottom,  #37ADD4,  #1B657E);
   height: auto;
-  margin-left: 10px;
 }
 
 a.download-button span {
@@ -674,7 +673,6 @@ a.download-button span {
   width: auto;
   height: auto;
   padding: 5px 10px;
-  padding-left: 45px;
   display: inline-block;
   text-indent: 0!important;
   color: #fff;
