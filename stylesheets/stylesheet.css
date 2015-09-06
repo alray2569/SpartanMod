@@ -659,7 +659,7 @@ a.code {
   -webkit-transition: opacity ease-in-out 0.3s;  /* Safari <=6.1, Android <= 4.3 */
 }
 
-a.jar {
+a.jar, a.jar span {
   background: transparent url(../images/jar.png) no-repeat 0 2px;
   display: block;
   height: 100%;
@@ -680,8 +680,6 @@ a.code:hover {
 }
 
 a.download-button {
-  border: 1px solid black;
-  border-radius: 3px;
   display: inline-block;
   text-indent: 0!important;
   width: auto;
@@ -699,6 +697,7 @@ a.download-button span {
   width: auto;
   height: auto;
   padding: 5px 10px;
+  padding-left: 45px;
   display: inline-block;
   text-indent: 0!important;
   color: #fff;
