@@ -21,18 +21,14 @@ public class FeatheredArmor extends ItemArmor {
 		super(material, id, slot);
 		this.setCreativeTab(CreativeTabs.tabCombat);
 		this.setMaxStackSize(1);
-		this.setTextureName(Constants.MODID + ":"
-				+ SMUtil.getUnwrappedUnlocalizedName(getUnlocalizedName()));
+		this.setTextureName(Constants.MODID + ":" + SMUtil.getUnwrappedUnlocalizedName(getUnlocalizedName()));
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
-			String layer) {
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String layer) {
 		if (slot == 0) {
-			String name = SMUtil.getUnwrappedUnlocalizedName(this
-					.getUnlocalizedName());
-			return String.format("%s:textures/model/%s.png", Constants.MODID,
-					name);
+			String name = SMUtil.getUnwrappedUnlocalizedName(this.getUnlocalizedName());
+			return String.format("%s:textures/model/%s.png", Constants.MODID, name);
 		}
 		return null;
 	}
