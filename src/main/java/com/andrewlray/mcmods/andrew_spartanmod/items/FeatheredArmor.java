@@ -15,7 +15,8 @@ import com.andrewlray.mcmods.andrew_spartanmod.proxy.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class FeatheredArmor extends ItemArmor {
+public class FeatheredArmor
+		extends ItemArmor {
 
 	public FeatheredArmor(ArmorMaterial material, int id, int slot) {
 		super(material, id, slot);
@@ -43,12 +44,14 @@ public class FeatheredArmor extends ItemArmor {
 	@SideOnly(Side.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack stack, int armorSlot) {
 		ModelBiped model = ClientProxy.armorModels.get(this);
-		
+
 		// Fix various stuff
-		model.isSneak = entityLiving.isSneaking();
-		model.isRiding = entityLiving.isRiding();
-		model.isChild = entityLiving.isChild();
-		
+		if (entityLiving != null) {
+			model.isSneak = entityLiving.isSneaking();
+			model.isRiding = entityLiving.isRiding();
+			model.isChild = entityLiving.isChild();
+		}
+
 		return model;
 	}
 }
