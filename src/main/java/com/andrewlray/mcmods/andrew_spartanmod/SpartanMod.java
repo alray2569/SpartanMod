@@ -11,7 +11,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Constants.MODID, name = Constants.MODNAME, version = "1.0.1")
+@Mod(modid = Constants.MODID, name = Constants.MODNAME, version = "1.0.1.2b")
 public class SpartanMod {
 
 	@Mod.Instance(Constants.MODID)
