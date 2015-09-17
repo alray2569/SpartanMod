@@ -1,0 +1,8 @@
+Changelog from version 1.0 to version 1.0.1:
+
+Additions:
++ Public Release
+
+Bugfixes:
+* Fix bug involving sneaking; helmets now properly move with your head when sneaking.
+
