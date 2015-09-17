@@ -1,0 +1,4 @@
+Changelog from version 1.0.1 to version 1.0.1.2b:
+
+Bugfix:
+* Helmets no longer cause a worldbreaking crash when placed on armor stands from other mods which provide a null EntityLiving to the getArmorModel() function.
