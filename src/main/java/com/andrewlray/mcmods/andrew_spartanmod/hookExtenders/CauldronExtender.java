@@ -19,14 +19,12 @@ public class CauldronExtender {
 	
 	@SubscribeEvent
 	public void blockClick(PlayerInteractEvent pie) {
-		FMLLog.log(Level.INFO, "Checkpoint A.");
 		if (pie.action == Action.RIGHT_CLICK_BLOCK) {
 			Block block = pie.entityPlayer.worldObj.getBlock(pie.x, pie.y, pie.z);
 			ItemStack item = pie.entityPlayer.getCurrentEquippedItem();
-			FMLLog.log(Level.INFO, "Checkpoint A. Item in use: ", item);
-			if (block == Blocks.cauldron && item != null && item.getItem() instanceof FeatheredArmor){
+			if (block == Blocks.cauldron && item != null && item.getItem() instanceof FeatheredArmor) {
 				FeatheredArmor farmor = (FeatheredArmor) item.getItem();
-				if (farmor.getArmorMaterial() == SMItems.leatherF && pie.entityPlayer.worldObj.getBlockMetadata(pie.x, pie.y, pie.z) != 0) {
+				if (farmor.getArmorMaterial() == SMItems.leatherF && farmor.hasColor(item) && pie.entityPlayer.worldObj.getBlockMetadata(pie.x, pie.y, pie.z) != 0) {
 					farmor.removeColor(item);
 					((BlockCauldron) block).func_150024_a(pie.entityPlayer.worldObj, pie.x, pie.y, pie.z, pie.entityPlayer.worldObj.getBlockMetadata(pie.x, pie.y, pie.z) - 1);
 				}
