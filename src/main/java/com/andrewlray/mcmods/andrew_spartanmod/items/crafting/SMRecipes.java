@@ -1,4 +1,4 @@
-package com.andrewlray.mcmods.andrew_spartanmod.proxy;
+package com.andrewlray.mcmods.andrew_spartanmod.items.crafting;
 
 import com.andrewlray.mcmods.andrew_spartanmod.items.SMItems;
 
@@ -17,6 +17,7 @@ public final class SMRecipes {
 			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(SMItems.ironHelmF, 1, 0), new ItemStack(Items.iron_helmet, 1, 0), new ItemStack(Items.feather, 1)));
 			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(SMItems.goldHelmF, 1, 0), new ItemStack(Items.golden_helmet, 1, 0), new ItemStack(Items.feather, 1)));
 			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(SMItems.diamHelmF, 1, 0), new ItemStack(Items.diamond_helmet, 1, 0), new ItemStack(Items.feather, 1)));
+			GameRegistry.addRecipe(new RecipesFeatheredArmorDyes());
 		}
 		initialized = true;
 	}
