@@ -1,0 +1,9 @@
++++ VERSION 1.0.2 +++
++ Leather feathered helmets can be crafted with dyes to change their colors, as with vanilla leather helmets
++ Colored leather feathered helmets can be uncolored by right-clicking on a filled cauldron with the helmet in hand.
+
++++ VERSION 1.0.1.2b +++
+* Helmets no longer cause a worldbreaking crash when placed on armor stands from other mods which provide a null EntityLiving to the getArmorModel() function
+
++++ VERSION 1.0.1 +++
+* Helmets now properly move with your head when sneaking.
