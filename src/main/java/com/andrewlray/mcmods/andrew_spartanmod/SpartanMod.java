@@ -1,5 +1,8 @@
 package com.andrewlray.mcmods.andrew_spartanmod;
 
+import net.minecraftforge.common.MinecraftForge;
+
+import com.andrewlray.mcmods.andrew_spartanmod.hookExtenders.CauldronExtender;
 import com.andrewlray.mcmods.andrew_spartanmod.items.SMItems;
 import com.andrewlray.mcmods.andrew_spartanmod.items.crafting.SMRecipes;
 import com.andrewlray.mcmods.andrew_spartanmod.lib.Constants;
@@ -32,6 +35,7 @@ public class SpartanMod {
 		proxy.registerProxies();
 		SMItems.init();
 		SMRecipes.init();
+		MinecraftForge.EVENT_BUS.register(new CauldronExtender());
 	}
 
 	@Mod.EventHandler

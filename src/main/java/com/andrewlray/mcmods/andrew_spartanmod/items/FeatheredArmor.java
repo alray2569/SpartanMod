@@ -1,15 +1,22 @@
 package com.andrewlray.mcmods.andrew_spartanmod.items;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCauldron;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
 import com.andrewlray.mcmods.andrew_spartanmod.lib.Constants;
 import com.andrewlray.mcmods.andrew_spartanmod.lib.SMUtil;
@@ -22,21 +29,15 @@ public class FeatheredArmor
 		extends ItemArmor {
 
 	@SideOnly(Side.CLIENT)
-    private IIcon overlayIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon emptySlotIcon;
-	
+	private IIcon overlayIcon;
+	@SideOnly(Side.CLIENT)
+	private IIcon emptySlotIcon;
+
 	public FeatheredArmor(ArmorMaterial material, int id, int slot) {
 		super(material, id, slot);
 		this.setCreativeTab(CreativeTabs.tabCombat);
 		this.setMaxStackSize(1);
 		this.setTextureName(Constants.MODID + ":" + SMUtil.getUnwrappedUnlocalizedName(getUnlocalizedName()));
-		this.setCustomCraftingMaterial();
-	}
-	
-	private void setCustomCraftingMaterial() {
-		if (this.getArmorMaterial() == SMItems.diamondF) {
-		}
 	}
 
 	@Override
@@ -51,19 +52,19 @@ public class FeatheredArmor
 		}
 		return null;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        this.itemIcon = iconRegister.registerIcon(SMUtil.getResourceName(this));
-        
-        if (this.getArmorMaterial() == SMItems.leatherF)
-        {
-            this.overlayIcon = iconRegister.registerIcon(SMUtil.getResourceName(this) + "_overlay");
-        }
-        
-        this.emptySlotIcon = iconRegister.registerIcon("empty_armor_slot_helmet");
-    }
+	public void registerIcons(IIconRegister iconRegister)
+	{
+		this.itemIcon = iconRegister.registerIcon(SMUtil.getResourceName(this));
+
+		if (this.getArmorMaterial() == SMItems.leatherF)
+		{
+			this.overlayIcon = iconRegister.registerIcon(SMUtil.getResourceName(this) + "_overlay");
+		}
+
+		this.emptySlotIcon = iconRegister.registerIcon("empty_armor_slot_helmet");
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -79,15 +80,16 @@ public class FeatheredArmor
 
 		return model;
 	}
-	
-    /**
-     * Gets an icon index based on an item's damage value and the given render pass
-     */
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamageForRenderPass(int p_77618_1_, int p_77618_2_)
-    {
-        return p_77618_2_ == 1 ? this.overlayIcon : super.getIconFromDamageForRenderPass(p_77618_1_, p_77618_2_);
-    }
+
+	/**
+	 * Gets an icon index based on an item's damage value and the given render
+	 * pass
+	 */
+	@SideOnly(Side.CLIENT)
+	public IIcon getIconFromDamageForRenderPass(int damage, int pass)
+	{
+		return pass == 1 ? this.overlayIcon : super.getIconFromDamageForRenderPass(damage, pass);
+	}
 
 	@Override
 	public boolean hasColor(ItemStack stack) {
@@ -98,14 +100,15 @@ public class FeatheredArmor
 	public int getColor(ItemStack stack) {
 		if (this.getArmorMaterial() == SMItems.leatherF) {
 			NBTTagCompound nbt = stack.getTagCompound();
-			if (nbt == null) return 10511680;
+			if (nbt == null)
+				return 10511680;
 			NBTTagCompound nbt1 = nbt.getCompoundTag("display");
 			return nbt1 == null ? 10511680 : (nbt1.hasKey("color", 3) ? nbt1.getInteger("color") : 10511680);
 		}
 
 		return -1;
 	}
-	
+
 	@Override
 	public void func_82813_b(ItemStack stack, int color) {
 		if (this.getArmorMaterial() != SMItems.leatherF) {
@@ -116,22 +119,40 @@ public class FeatheredArmor
 				nbt = new NBTTagCompound();
 				stack.setTagCompound(nbt);
 			}
-			
+
 			NBTTagCompound nbt1 = nbt.getCompoundTag("display");
-			
+
 			if (!nbt.hasKey("display", 10))
 				nbt.setTag("display", nbt1);
-			
+
 			nbt1.setInteger("color", color);
 		}
 	}
-	
+
+	@Override
+	public void removeColor(ItemStack stack) {
+		if (this.getArmorMaterial() == SMItems.leatherF)
+		{
+			NBTTagCompound nbttagcompound = stack.getTagCompound();
+
+			if (nbttagcompound != null)
+			{
+				NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+
+				if (nbttagcompound1.hasKey("color"))
+				{
+					nbttagcompound1.removeTag("color");
+				}
+			}
+		}
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean requiresMultipleRenderPasses() {
 		return this.getArmorMaterial() == SMItems.leatherF;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int x) {
@@ -139,7 +160,7 @@ public class FeatheredArmor
 			return 16777215;
 		} else {
 			int j = this.getColor(stack);
-			if (j < 0){
+			if (j < 0) {
 				j = 16777215;
 			}
 			return j;
