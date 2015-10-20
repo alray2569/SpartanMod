@@ -49,6 +49,7 @@ public class SpartanMod {
 	 * various preInit functions for the handlers, registers, and proxies in
 	 * SpartanMod.<br>
 	 * <br>
+	 * "Bring out the penguins."
 	 * 
 	 * @param e
 	 *            The {@linkplain FMLPreInitializationEvent}.
@@ -60,6 +61,19 @@ public class SpartanMod {
 		SMItems.preInit();
 	}
 
+	/**
+	 * The EventHandler that handles FMLInitializationEvents. It calls the various init functions for the handlers, registers, and proxies in SpartanMod.<br>
+	 * <br>
+	 * "Resistance is futile."
+	 * 
+	 * @param e The {@linkplain FMLInitializationEvent}.
+	 * @see CommonProxy#registerProxies()
+	 * @see com.andrewlray.mcmods.andrew_spartanmod.proxy.ClientProxy#registerProxies ClientProxy.registerProxies()
+	 * @see SMItems#init()
+	 * @see SMRecipes#init()
+	 * @see CauldronExtender
+	 * @see cpw.mods.fml.common.eventhandler.EventBus#register(Object)
+	 */
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e) {
 		// Resistance is futile
