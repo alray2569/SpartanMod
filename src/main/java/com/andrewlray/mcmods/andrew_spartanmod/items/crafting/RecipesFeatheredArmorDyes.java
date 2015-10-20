@@ -13,9 +13,30 @@ import net.minecraft.world.World;
 import com.andrewlray.mcmods.andrew_spartanmod.items.FeatheredArmor;
 import com.andrewlray.mcmods.andrew_spartanmod.items.SMItems;
 
+/**
+ * This class contains the crafting data necessary to allow leather feathered
+ * helmets to be dyed.
+ * 
+ * @author Andrew Ray
+ * @see IRecipe
+ * @see FeatheredArmor
+ */
 public class RecipesFeatheredArmorDyes
 		implements IRecipe {
 
+	/**
+	 * Returns true <abbr name="if and only if">iff</abbr> the configuration of
+	 * items in the crafting window is a valid dyeing pattern, i.e. if the
+	 * contents of the crafting window are exactly one leather feathered helmet
+	 * and a non-zero number of various dyes.
+	 * 
+	 * @param ic
+	 *            The {@linkplain InventoryCrafting}
+	 * @param world
+	 *            The {@linkplain World} in which the crafting is taking place.
+	 * @return true iff the configuration of items in the crafting window is a
+	 *         valid dyeing pattern.
+	 */
 	@Override
 	public boolean matches(InventoryCrafting ic, World world) {
 		ItemStack stack = null;
@@ -45,6 +66,14 @@ public class RecipesFeatheredArmorDyes
 		return stack != null && !arrayList.isEmpty();
 	}
 
+	/**
+	 * Returns the result of crafting if matches returns true. If matches
+	 * returns false, returns null.
+	 * 
+	 * @param ic
+	 *            The {@linkplain InventoryCrafting}
+	 * @return the result of crafting, or null if none.
+	 */
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting ic) {
 		ItemStack stack = null;
@@ -84,7 +113,7 @@ public class RecipesFeatheredArmorDyes
 					if (stack1.getItem() != Items.dye) {
 						return null;
 					}
-					
+
 					float[] afloat = EntitySheep.fleeceColorTable[BlockColored.func_150032_b(stack1.getItemDamage())];
 					int b1 = (int) (afloat[0] * 255F);
 					int c1 = (int) (afloat[1] * 255F);
@@ -97,7 +126,7 @@ public class RecipesFeatheredArmorDyes
 				}
 			}
 		}
-		
+
 		if (farmor == null) {
 			return null;
 		} else {
@@ -116,16 +145,25 @@ public class RecipesFeatheredArmorDyes
 		}
 	}
 
+	/**
+	 * Gets the size of this type of recipe.
+	 * 
+	 * @return The size of this recipe.
+	 */
 	@Override
-    public int getRecipeSize()
-    {
-        return 10;
-    }
+	public int getRecipeSize()
+	{
+		return 10;
+	}
 
+	/**
+	 * Returns null.
+	 * @return null
+	 */
 	@Override
-    public ItemStack getRecipeOutput()
-    {
-        return null;
-    }
-	
+	public ItemStack getRecipeOutput()
+	{
+		return null;
+	}
+
 }

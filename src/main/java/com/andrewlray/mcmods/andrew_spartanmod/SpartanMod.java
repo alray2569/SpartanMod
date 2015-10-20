@@ -68,21 +68,28 @@ public class SpartanMod {
 	 * 
 	 * @param e The {@linkplain FMLInitializationEvent}.
 	 * @see CommonProxy#registerProxies()
-	 * @see com.andrewlray.mcmods.andrew_spartanmod.proxy.ClientProxy#registerProxies ClientProxy.registerProxies()
 	 * @see SMItems#init()
 	 * @see SMRecipes#init()
-	 * @see CauldronExtender
-	 * @see cpw.mods.fml.common.eventhandler.EventBus#register(Object)
+	 * @see CauldronExtender#init()
 	 */
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e) {
-		// Resistance is futile
 		proxy.registerProxies();
 		SMItems.init();
 		SMRecipes.init();
-		MinecraftForge.EVENT_BUS.register(new CauldronExtender());
+		CauldronExtender.init();
 	}
 
+	/**
+	 * The EventHandler that would handle FMLPostInitializationEvents. It would
+	 * call the various postInit functions for the handlers, registers, and
+	 * proxies in SpartanMod if any of them had one.<br>
+	 * <br>
+	 * "Huh? What's this thing doing here?"
+	 * 
+	 * @param e
+	 *            The {@linkplain FMLPostInitializationEvent}.
+	 */
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
 
