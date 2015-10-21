@@ -5,7 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
-import static com.andrewlray.mcmods.andrew_spartanmod.lib.Constants.*;
+import com.andrewlray.mcmods.andrew_spartanmod.lib.Constants;
 
 public class SMItems {
 
@@ -35,10 +35,10 @@ public class SMItems {
 	
 	/** The feathered gold helmet. */
 	public static Item goldHelmF;
-	
+
 	/** The feathered diamond helmet. */
 	public static Item diamHelmF;
-	
+
 	/**
 	 * Preinitializes the SMItems class by initializing the armor materials and
 	 * armor.
@@ -51,10 +51,10 @@ public class SMItems {
 			goldF.customCraftingMaterial = Items.gold_ingot;
 			diamondF.customCraftingMaterial = Items.diamond;
 
-			leathCapF = new FeatheredArmor(leatherF, leathCapFID, 0).setUnlocalizedName(leathCapFName);
-			ironHelmF = new FeatheredArmor(ironF, ironHelmFID, 0).setUnlocalizedName(ironHelmFName);
-			goldHelmF = new FeatheredArmor(goldF, goldHelmFID, 0).setUnlocalizedName(goldHelmFName);
-			diamHelmF = new FeatheredArmor(diamondF, diamHelmFID, 0).setUnlocalizedName(diamHelmFName);
+			leathCapF = new FeatheredArmor(leatherF, Constants.leathCapFID, 0).setUnlocalizedName(Constants.leathCapFName);
+			ironHelmF = new FeatheredArmor(ironF, Constants.ironHelmFID, 0).setUnlocalizedName(Constants.ironHelmFName);
+			goldHelmF = new FeatheredArmor(goldF, Constants.goldHelmFID, 0).setUnlocalizedName(Constants.goldHelmFName);
+			diamHelmF = new FeatheredArmor(diamondF, Constants.diamHelmFID, 0).setUnlocalizedName(Constants.diamHelmFName);
 		}
 		preinitialized = true;
 	}
@@ -67,10 +67,10 @@ public class SMItems {
 	 */
 	public static void init() {
 		if (!initialized) /* Only run once! */{
-			GameRegistry.registerItem(leathCapF, leathCapFName);
-			GameRegistry.registerItem(ironHelmF, ironHelmFName);
-			GameRegistry.registerItem(goldHelmF, goldHelmFName);
-			GameRegistry.registerItem(diamHelmF, diamHelmFName);
+			GameRegistry.registerItem(leathCapF, Constants.leathCapFName);
+			GameRegistry.registerItem(ironHelmF, Constants.ironHelmFName);
+			GameRegistry.registerItem(goldHelmF, Constants.goldHelmFName);
+			GameRegistry.registerItem(diamHelmF, Constants.diamHelmFName);
 		}
 		initialized = true;
 	}
