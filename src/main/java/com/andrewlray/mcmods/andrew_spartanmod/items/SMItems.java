@@ -1,11 +1,13 @@
 package com.andrewlray.mcmods.andrew_spartanmod.items;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
+
 import com.andrewlray.mcmods.andrew_spartanmod.lib.Constants;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class SMItems {
 
