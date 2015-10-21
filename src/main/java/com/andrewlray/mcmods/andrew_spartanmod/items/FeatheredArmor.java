@@ -25,14 +25,39 @@ import com.andrewlray.mcmods.andrew_spartanmod.proxy.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+/**
+ * This class contains information relevant to the existance of feathered
+ * helmets.
+ * 
+ * @author Andrew Ray
+ *
+ */
 public class FeatheredArmor
 		extends ItemArmor {
 
+	/**
+	 * The overlay icon used by leather feathered helmets.
+	 */
 	@SideOnly(Side.CLIENT)
 	private IIcon overlayIcon;
+
+	/**
+	 * The empty slot icon.
+	 */
 	@SideOnly(Side.CLIENT)
 	private IIcon emptySlotIcon;
 
+	/**
+	 * Creates a new instance of feathered armor with the given material, id,
+	 * and type.
+	 * 
+	 * @param material
+	 *            The {@linkplain ArmorMaterial} to use for this armor.
+	 * @param id
+	 *            The render index of this armor.
+	 * @param slot
+	 *            The type of this armor.
+	 */
 	public FeatheredArmor(ArmorMaterial material, int id, int slot) {
 		super(material, id, slot);
 		this.setCreativeTab(CreativeTabs.tabCombat);
@@ -40,6 +65,20 @@ public class FeatheredArmor
 		this.setTextureName(Constants.MODID + ":" + SMUtil.getUnwrappedUnlocalizedName(getUnlocalizedName()));
 	}
 
+	/**
+	 * Returns the armor texture location.
+	 * 
+	 * @param stack
+	 *            The {@linkplain ItemStack} to get the texture for.
+	 * @param entity
+	 *            The {@linkplain Entity} wearing the armor.
+	 * @param slot
+	 *            The type of the armor.
+	 * @param layer
+	 *            Either "overlay" for the overlay layer or null for the main
+	 *            layer.
+	 * @return The texture for this armor
+	 */
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String layer) {
 		if (slot == 0 && layer == null) {
@@ -53,6 +92,13 @@ public class FeatheredArmor
 		return null;
 	}
 
+	/**
+	 * Registers icons as necessary with the icon register
+	 * 
+	 * @param iconRegister
+	 *            The {@linkplain IIconRegister} with which to register icons.
+	 * @see IIcon
+	 */
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
 	{
@@ -66,6 +112,19 @@ public class FeatheredArmor
 		this.emptySlotIcon = iconRegister.registerIcon("empty_armor_slot_helmet");
 	}
 
+	/**
+	 * Returns the armor model for this armor.
+	 * 
+	 * @param entityLiving
+	 *            The {@linkplain EntityLivingBase} that is wearing this armor.
+	 *            Some modded armor stands will use null.
+	 * @param stack
+	 *            The {@linkplain ItemStack} to get the model for.
+	 * @param armorSlot
+	 *            The inventory slot which contains the armor.
+	 * @return A {@linkplain ModelBiped} which can be used to render the armor.
+	 * @see ClientProxy#armorModels
+	 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack stack, int armorSlot) {
@@ -83,7 +142,13 @@ public class FeatheredArmor
 
 	/**
 	 * Gets an icon index based on an item's damage value and the given render
-	 * pass
+	 * pass.
+	 * 
+	 * @param damage
+	 *            The damage value of the armor
+	 * @param pass
+	 *            The current render pass.
+	 * @return The appropriate {@linkplain IIcon} to render.
 	 */
 	@SideOnly(Side.CLIENT)
 	public IIcon getIconFromDamageForRenderPass(int damage, int pass)
@@ -91,11 +156,29 @@ public class FeatheredArmor
 		return pass == 1 ? this.overlayIcon : super.getIconFromDamageForRenderPass(damage, pass);
 	}
 
+	/**
+	 * Returns true iff the given {@linkplain ItemStack} is a leather feathered
+	 * helmet and has a color associated with it.
+	 * 
+	 * @param stack
+	 *            The ItemStack to check for a color.
+	 * @return true iff the given ItemStack is a colored leather feathered
+	 *         helmet.
+	 */
 	@Override
 	public boolean hasColor(ItemStack stack) {
 		return this.getArmorMaterial() != SMItems.leatherF ? false : (!stack.hasTagCompound() ? false : (!stack.getTagCompound().hasKey("display", 10) ? false : stack.getTagCompound().getCompoundTag("display").hasKey("color", 3)));
 	}
 
+	/**
+	 * Returns the color of the given ItemStack if it has a color, 10511680 if
+	 * it is an uncolored feathered leather helmet, or -1 if it is not a leather
+	 * feathered helmet.
+	 *
+	 * @param stack
+	 *            The ItemStack to check
+	 * @return The color of the ItemStack, or 10511680 if none.
+	 */
 	@Override
 	public int getColor(ItemStack stack) {
 		if (this.getArmorMaterial() == SMItems.leatherF) {
@@ -109,6 +192,18 @@ public class FeatheredArmor
 		return -1;
 	}
 
+	/**
+	 * <b>addColor</b><br>
+	 * Adds the given color to the given stack.
+	 * 
+	 * @param stack
+	 *            The {@linkplain ItemStack} to add the color to
+	 * @param color
+	 *            The color to add
+	 * @see NBTTagCompound
+	 * @exception UnsupportedOperationException
+	 *                if the armor material is not leatherF.
+	 */
 	@Override
 	public void func_82813_b(ItemStack stack, int color) {
 		if (this.getArmorMaterial() != SMItems.leatherF) {
@@ -129,6 +224,13 @@ public class FeatheredArmor
 		}
 	}
 
+	/**
+	 * Removes the color from the given stack.
+	 * 
+	 * @param stack
+	 *            The {@linkplain ItemStack} to remove the color from.
+	 * @see NBTTagCompound
+	 */
 	@Override
 	public void removeColor(ItemStack stack) {
 		if (this.getArmorMaterial() == SMItems.leatherF)
@@ -147,12 +249,21 @@ public class FeatheredArmor
 		}
 	}
 
+	/**
+	 * Returns true iff the material is leatherF to indicate whether or not this
+	 * needs to be rendered in multiple passes.
+	 * 
+	 * @return true iff the material needs to be rendered in multiple passes
+	 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean requiresMultipleRenderPasses() {
 		return this.getArmorMaterial() == SMItems.leatherF;
 	}
 
+	/**
+	 * Not sure how this works or what it does.
+	 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int x) {
