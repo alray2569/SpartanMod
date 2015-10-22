@@ -2,7 +2,7 @@ package com.andrewlray.mcmods.andrew_spartanmod;
 
 import net.minecraftforge.common.MinecraftForge;
 
-import com.andrewlray.mcmods.andrew_spartanmod.hookExtenders.CauldronExtender;
+import com.andrewlray.mcmods.andrew_spartanmod.hookExtenders.PlayerInteractEventHookExtender;
 import com.andrewlray.mcmods.andrew_spartanmod.items.SMItems;
 import com.andrewlray.mcmods.andrew_spartanmod.items.crafting.SMRecipes;
 import com.andrewlray.mcmods.andrew_spartanmod.lib.Constants;
@@ -70,14 +70,14 @@ public class SpartanMod {
 	 * @see CommonProxy#registerProxies()
 	 * @see SMItems#init()
 	 * @see SMRecipes#init()
-	 * @see CauldronExtender#init()
+	 * @see PlayerInteractEventHookExtender#init()
 	 */
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent e) {
 		proxy.registerProxies();
 		SMItems.init();
 		SMRecipes.init();
-		CauldronExtender.init();
+		PlayerInteractEventHookExtender.init();
 	}
 
 	/**
