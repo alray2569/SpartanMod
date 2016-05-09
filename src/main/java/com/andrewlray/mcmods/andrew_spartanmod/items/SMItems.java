@@ -98,7 +98,6 @@ public class SMItems {
 	 */
 	public static Item colored_feather;
 
-
 	/**
 	 * Preinitializes the SMItems class by initializing the armor materials and
 	 * armor.
