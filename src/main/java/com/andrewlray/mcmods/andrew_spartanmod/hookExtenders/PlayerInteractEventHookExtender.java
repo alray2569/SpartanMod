@@ -20,7 +20,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
  * @see MinecraftForge
  * @see SubscribeEvent
  */
-public class CauldronExtender {
+public class PlayerInteractEventHookExtender {
 
 	/** true iff this class has been initialized. */
 	private static boolean init = false;
@@ -40,19 +40,25 @@ public class CauldronExtender {
 	public void blockClick(PlayerInteractEvent pie) {
 		if (pie.action == Action.RIGHT_CLICK_BLOCK) {
 			Block block = pie.world.getBlock(pie.x, pie.y, pie.z);
-			ItemStack item = pie.entityPlayer.getCurrentEquippedItem();
-			if (block == Blocks.cauldron && item != null && item.getItem() instanceof FeatheredArmor) {
-				FeatheredArmor farmor = (FeatheredArmor) item.getItem();
-				if (farmor.getArmorMaterial() == SMItems.leatherF && farmor.hasColor(item) && pie.world.getBlockMetadata(pie.x, pie.y, pie.z) != 0) {
-					farmor.removeColor(item);
-					((BlockCauldron) block).func_150024_a(pie.world, pie.x, pie.y, pie.z, pie.world.getBlockMetadata(pie.x, pie.y, pie.z) - 1);
-				}
+			if (block == Blocks.cauldron) {
+				cauldron_onRightClick(pie, (BlockCauldron) block, pie.world.getBlockMetadata(pie.x, pie.y, pie.z));
+			}
+		}
+	}
+	
+	private static void cauldron_onRightClick(PlayerInteractEvent pie, BlockCauldron cauldron, int meta) {
+		ItemStack item = pie.entityPlayer.getCurrentEquippedItem();
+		if (item != null && item.getItem() instanceof FeatheredArmor) {
+			FeatheredArmor farmor = (FeatheredArmor) item.getItem();
+			if (farmor.isLeather && farmor.hasColor(item) && meta != 0) {
+				farmor.removeColor(item);
+				cauldron.func_150024_a(pie.world, pie.x, pie.y, pie.z, meta - 1);
 			}
 		}
 	}
 
 	/**
-	 * Initializes the CauldronExtender and registers it with the Forge Event
+	 * Initializes the PlayerInteractEventHookExtender and registers it with the Forge Event
 	 * bus.
 	 * 
 	 * @see cpw.mods.fml.common.eventhandler.EventBus#register(Object)
@@ -60,7 +66,7 @@ public class CauldronExtender {
 	 */
 	public static void init() {
 		if (!init) {
-			MinecraftForge.EVENT_BUS.register(new CauldronExtender());
+			MinecraftForge.EVENT_BUS.register(new PlayerInteractEventHookExtender());
 		}
 		init = true;
 	}
