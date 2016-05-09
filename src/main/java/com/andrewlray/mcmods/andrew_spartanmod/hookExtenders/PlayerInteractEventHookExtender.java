@@ -50,7 +50,7 @@ public class PlayerInteractEventHookExtender {
 		ItemStack item = pie.entityPlayer.getCurrentEquippedItem();
 		if (item != null && item.getItem() instanceof FeatheredArmor) {
 			FeatheredArmor farmor = (FeatheredArmor) item.getItem();
-			if (farmor.getArmorMaterial() == SMItems.leatherF && farmor.hasColor(item) && meta != 0) {
+			if (farmor.isLeather && farmor.hasColor(item) && meta != 0) {
 				farmor.removeColor(item);
 				cauldron.func_150024_a(pie.world, pie.x, pie.y, pie.z, meta - 1);
 			}

@@ -46,6 +46,8 @@ public class FeatheredArmor
 	 */
 	@SideOnly(Side.CLIENT)
 	private IIcon emptySlotIcon;
+	
+	public boolean isLeather;
 
 	/**
 	 * Creates a new instance of feathered armor with the given material, id,
@@ -58,8 +60,9 @@ public class FeatheredArmor
 	 * @param slot
 	 *            The type of this armor.
 	 */
-	public FeatheredArmor(ArmorMaterial material, int id, int slot) {
+	public FeatheredArmor(ArmorMaterial material, int id, int slot, boolean isLeather) {
 		super(material, id, slot);
+		this.isLeather = isLeather;
 		this.setCreativeTab(CreativeTabs.tabCombat);
 		this.setMaxStackSize(1);
 		this.setTextureName(Constants.MODID + ":" + SMUtil.getUnwrappedUnlocalizedName(getUnlocalizedName()));
@@ -81,13 +84,20 @@ public class FeatheredArmor
 	 */
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String layer) {
-		if (slot == 0 && layer == null) {
-			String name = SMUtil.getUnwrappedUnlocalizedName(this.getUnlocalizedName());
-			return String.format("%s:textures/model/%s.png", Constants.MODID, name);
-		}
-		if (slot == 0 && layer == "overlay" && this.getArmorMaterial() == SMItems.leatherF) {
-			String name = SMUtil.getUnwrappedUnlocalizedName(this.getUnlocalizedName());
-			return String.format("%s:textures/model/%s_overlay.png", Constants.MODID, name);
+		if (this.isLeather) {
+			if (slot == 0) {
+				if (layer == null) {
+					return String.format("%s:textures/model/%s.png", Constants.MODID, Constants.leathCapFName);
+				} else if (layer == "overlay") {
+					String name = SMUtil.getUnwrappedUnlocalizedName(this.getUnlocalizedName());
+					return String.format("%s:textures/model/%s_overlay.png", Constants.MODID, name);
+				}
+			}
+		} else {
+			if (slot == 0 && layer == null) {
+				String name = SMUtil.getUnwrappedUnlocalizedName(this.getUnlocalizedName());
+				return String.format("%s:textures/model/%s.png", Constants.MODID, name);
+			}
 		}
 		return null;
 	}
@@ -104,9 +114,11 @@ public class FeatheredArmor
 	{
 		this.itemIcon = iconRegister.registerIcon(SMUtil.getResourceName(this));
 
-		if (this.getArmorMaterial() == SMItems.leatherF)
+		if (this.isLeather)
 		{
 			this.overlayIcon = iconRegister.registerIcon(SMUtil.getResourceName(this) + "_overlay");
+		} else {
+			this.overlayIcon = iconRegister.registerIcon(Constants.MODID + ":null");
 		}
 
 		this.emptySlotIcon = iconRegister.registerIcon("empty_armor_slot_helmet");
@@ -167,7 +179,7 @@ public class FeatheredArmor
 	 */
 	@Override
 	public boolean hasColor(ItemStack stack) {
-		return this.getArmorMaterial() != SMItems.leatherF ? false : (!stack.hasTagCompound() ? false : (!stack.getTagCompound().hasKey("display", 10) ? false : stack.getTagCompound().getCompoundTag("display").hasKey("color", 3)));
+		return !this.isLeather ? false : (!stack.hasTagCompound() ? false : (!stack.getTagCompound().hasKey("display", 10) ? false : stack.getTagCompound().getCompoundTag("display").hasKey("color", 3)));
 	}
 
 	/**
@@ -181,7 +193,7 @@ public class FeatheredArmor
 	 */
 	@Override
 	public int getColor(ItemStack stack) {
-		if (this.getArmorMaterial() == SMItems.leatherF) {
+		if (this.isLeather) {
 			NBTTagCompound nbt = stack.getTagCompound();
 			if (nbt == null)
 				return 10511680;
@@ -206,7 +218,7 @@ public class FeatheredArmor
 	 */
 	@Override
 	public void func_82813_b(ItemStack stack, int color) {
-		if (this.getArmorMaterial() != SMItems.leatherF) {
+		if (!this.isLeather) {
 			throw new UnsupportedOperationException("Can\'t dye non-leather!");
 		} else {
 			NBTTagCompound nbt = stack.getTagCompound();
@@ -233,7 +245,7 @@ public class FeatheredArmor
 	 */
 	@Override
 	public void removeColor(ItemStack stack) {
-		if (this.getArmorMaterial() == SMItems.leatherF)
+		if (this.isLeather)
 		{
 			NBTTagCompound nbttagcompound = stack.getTagCompound();
 
@@ -258,7 +270,7 @@ public class FeatheredArmor
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean requiresMultipleRenderPasses() {
-		return this.getArmorMaterial() == SMItems.leatherF;
+		return this.isLeather;
 	}
 
 	/**
